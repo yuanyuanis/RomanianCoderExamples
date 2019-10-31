@@ -19,9 +19,11 @@ public class BootSecurityApplication {
 
     @Bean
     public ServletWebServerFactory servletContainer() {
-        // Enable SSL Trafic
+        // 1) Habilitamos el tráfico SSL
         TomcatServletWebServerFactory tomcat = new TomcatServletWebServerFactory() {
-            @Override
+            
+        	// Tipo de seguridad CONFIDENTIAL
+        	@Override
             protected void postProcessContext(Context context) {
                 SecurityConstraint securityConstraint = new SecurityConstraint();
                 securityConstraint.setUserConstraint("CONFIDENTIAL");
@@ -32,17 +34,18 @@ public class BootSecurityApplication {
             }
         };
 
-        // Add HTTP to HTTPS redirect
+        // 2) Añadimos redireccion de HTTP a HTTPS 
         tomcat.addAdditionalTomcatConnectors(httpToHttpsRedirectConnector());
 
         return tomcat;
     }
 
-    /*
-    We need to redirect from HTTP to HTTPS. Without SSL, this application used
-    port 8082. With SSL it will use port 8443. So, any request for 8082 needs to be
-    redirected to HTTPS on 8443.
-     */
+    /**
+     * Necesitamos redirigir de HTTP a HTTPS. 
+     * Sin SSL, esta aplicación utiliza el puerto 8082. 
+     * Con SSL utilizará el puerto 8443. 
+     * Por lo tanto, cualquier solicitud de 8082 debe ser redirigido a HTTPS en 8443.
+     **/
     private Connector httpToHttpsRedirectConnector() {
         Connector connector = new Connector(TomcatServletWebServerFactory.DEFAULT_PROTOCOL);
         connector.setScheme("http");

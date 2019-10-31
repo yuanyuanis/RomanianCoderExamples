@@ -1,74 +1,116 @@
 package rc.bootsecurity.model;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Entity
+@Table(name = "USER")
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long id;
 
-    @Column(nullable = false)
-    private String username;
+	@Column(nullable = false, unique = true)
+	private String username;
 
-    @Column(nullable = false)
-    private String password;
+	@Column(nullable = false)
+	private String password;
 
-    private int active;
+	private int active;
 
-    private String roles = "";
+	@Column(nullable = false, unique = true)
+	private String mail;
 
-    private String permissions = "";
+	@ManyToMany(cascade = CascadeType.ALL, fetch= FetchType.EAGER)
+	@JoinTable(name = "USER_ROLES", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
+	private List<Role> rolesList;
 
-    public User(String username, String password, String roles, String permissions){
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
-        this.permissions = permissions;
-        this.active = 1;
-    }
+	/**
+	 * Constructor con los campos que son obligatorios
+	 * 
+	 * @param username
+	 * @param password
+	 * @param mail
+	 * @param rolesList
+	 */
+	public User(String username, String password, String mail) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.mail = mail;
+		this.active = 1;
+	}
 
-    protected User(){}
+	public User() {
+	}
 
-    public long getId() {
-        return id;
-    }
+	public long getId() {
+		return id;
+	}
 
-    public String getUsername() {
-        return username;
-    }
+	public String getUsername() {
+		return username;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public int getActive() {
-        return active;
-    }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-    public String getRoles() {
-        return roles;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public String getPermissions() {
-        return permissions;
-    }
+	public void setActive(int active) {
+		this.active = active;
+	}
 
-    public List<String> getRoleList(){
-        if(this.roles.length() > 0){
-            return Arrays.asList(this.roles.split(","));
-        }
-        return new ArrayList<>();
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public List<String> getPermissionList(){
-        if(this.permissions.length() > 0){
-            return Arrays.asList(this.permissions.split(","));
-        }
-        return new ArrayList<>();
-    }
+	public int getActive() {
+		return active;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public List<Role> getRolesList() {
+		return rolesList;
+	}
+
+	public void setRolesList(List<Role> rolesList) {
+		this.rolesList = rolesList;
+	}
+
+	public List<? extends GrantedAuthority> getRoleListAsGrantedAuthority() {
+		return this.rolesList.stream().map(role -> new SimpleGrantedAuthority(role.getName()))
+				.collect(Collectors.toList());
+	}
+
 }
