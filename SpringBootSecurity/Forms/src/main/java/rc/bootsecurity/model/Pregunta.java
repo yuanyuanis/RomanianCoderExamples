@@ -3,11 +3,13 @@ package rc.bootsecurity.model;
 import java.sql.Blob;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -18,16 +20,17 @@ public class Pregunta {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	
+	@ManyToOne
+	@JoinColumn(name="tema_id", nullable= false, updatable=false)
+	private Tema tema;
+	
 	@Column(nullable=false, length=600)
 	private String pregunta;
 	
 	private Blob imagen;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pregunta")
 	private List<Respuesta> answers;
-	
-	@ManyToOne
-	private Tema tema;
 	
 	@Column(nullable=false, length=800)
 	private String textoRespuestaCorrecta;

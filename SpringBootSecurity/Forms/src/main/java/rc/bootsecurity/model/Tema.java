@@ -2,13 +2,17 @@ package rc.bootsecurity.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+@Entity
 public class Tema {
 	
 	@Id
@@ -16,6 +20,7 @@ public class Tema {
 	private Long id;
 	
 	@ManyToOne
+	@JoinColumn(name="modulo_id", nullable= false, updatable=false)
 	private Modulo modulo;
 	
 	@Column(nullable=false, length=100)
@@ -24,7 +29,7 @@ public class Tema {
 	@Column(nullable=false, length=200)
 	private String descTema;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "tema")
 	private List<Pregunta> listaPreguntas;
 
 	public Long getId() {

@@ -1,32 +1,41 @@
 package rc.bootsecurity.model;
 
-import java.util.List;
+import java.sql.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
-public class UserPregunta {
+@EntityListeners(AuditingEntityListener.class)
+public class UserPreguntaRespuesta extends Auditable<String>{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "pregunta_id")
 	private Pregunta pregunta;
 
 	@ManyToOne
-	@JoinColumn(name = "id")
+	@JoinColumn(name = "user_id")
 	private User user;
-
-	@OneToMany
-	private List<Respuesta> listRespuestasUsuario;
+	
+	@ManyToOne
+	@JoinColumn(name = "respuesta_id")
+	private Respuesta respuesta;
+	
+	@ManyToOne
+	@JoinColumn(name = "examen_id")
+	private Examen examen;
 
 	public Long getId() {
 		return id;
@@ -52,11 +61,20 @@ public class UserPregunta {
 		this.user = user;
 	}
 
-	public List<Respuesta> getListRespuestasUsuario() {
-		return listRespuestasUsuario;
+	public Respuesta getRespuesta() {
+		return respuesta;
 	}
 
-	public void setListRespuestasUsuario(List<Respuesta> listRespuestasUsuario) {
-		this.listRespuestasUsuario = listRespuestasUsuario;
+	public void setRespuesta(Respuesta respuesta) {
+		this.respuesta = respuesta;
 	}
+
+	public Examen getExamen() {
+		return examen;
+	}
+
+	public void setExamen(Examen examen) {
+		this.examen = examen;
+	}
+	
 }

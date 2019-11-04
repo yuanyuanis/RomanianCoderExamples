@@ -2,6 +2,7 @@ package rc.bootsecurity.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,7 +23,7 @@ public class Materia {
 	@Column(length=150)
 	private String descMateria;
 	
-	@OneToMany
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "materia")
 	private List<Modulo> listaModulos;
 
 	public Long getId() {
