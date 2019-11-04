@@ -51,7 +51,7 @@ public class PasswordForgotController {
 		// 1) Buscar el usuario del mail introducido, si no lo encontramos devolvemos el error al usuario
 		User user = userService.findByMail(form.getEmail());
         if (user == null){
-            result.rejectValue("email", null, "We could not find an account for that e-mail address.");
+            result.rejectValue("email", null, "Vaya!, no hemos podido encontrar tu mail");
             return "forgot-password";
         }
         
@@ -64,21 +64,19 @@ public class PasswordForgotController {
         
         // Configuracion del mail
         MailDto mailDto = new MailDto();
-        mailDto.setFrom("no-reply@memorynotfound.com");
+        mailDto.setFrom("no-reply@qcontents.com");
         mailDto.setTo(user.getMail());
-        mailDto.setSubject("Password reset request");
+        mailDto.setSubject("Reseteo de contraseña en QContents");
         
         // Establecemos las variables necesarias(token, user, signature,requestUrl)
         Map<String, Object> model = new HashMap<>();
         model.put("token", token);
         model.put("user", user);
-        model.put("signature", "https://memorynotfound.com");
+        model.put("signature", "https://localhost:8443");
         String url = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort();
         model.put("resetUrl", url + "/reset-password?token=" + token.getToken());
         mailDto.setModel(model);
         emailService.sendEmail(mailDto);
-        
-        
         
         return "redirect:/forgot-password?success";
 	}

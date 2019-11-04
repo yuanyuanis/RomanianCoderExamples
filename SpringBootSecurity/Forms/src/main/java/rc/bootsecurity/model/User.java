@@ -33,6 +33,13 @@ public class User {
 	private String password;
 
 	private int active;
+	
+	@Column(nullable = false)
+	private String nombre;
+	
+	@Column(nullable = false)
+	private String apellidos;
+	
 
 	@Column(nullable = false, unique = true)
 	private String mail;
@@ -49,12 +56,14 @@ public class User {
 	 * @param mail
 	 * @param rolesList
 	 */
-	public User(String username, String password, String mail) {
+	public User(String username, String password, String mail, String nombre, String apellidos) {
 		super();
 		this.username = username;
 		this.password = password;
 		this.mail = mail;
 		this.active = 1;
+		this.nombre = nombre;
+		this.apellidos = apellidos;
 	}
 
 	public User() {
@@ -112,5 +121,22 @@ public class User {
 		return this.rolesList.stream().map(role -> new SimpleGrantedAuthority(role.getName()))
 				.collect(Collectors.toList());
 	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
+	
 
 }

@@ -48,5 +48,10 @@ public class UserPrincipalDetailsService implements UserDetailsService, UserServ
 		}
 		return new org.springframework.security.core.userdetails.User(user.getMail(), user.getPassword(), user.getRoleListAsGrantedAuthority());
 	}
+
+	@Override
+	public User findByUsername(String username) {
+		return userRepository.findByUsername(username);
+	}
     
 }

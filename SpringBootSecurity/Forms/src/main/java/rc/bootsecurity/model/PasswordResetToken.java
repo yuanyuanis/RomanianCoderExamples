@@ -29,7 +29,15 @@ public class PasswordResetToken {
 	@JoinColumn(nullable=false, name ="user_id")
 	private User user;
 	
+	@Column(nullable=false)
 	private Date expirityDate;
+	
+	public PasswordResetToken() {
+		Calendar ahora = Calendar.getInstance();
+		ahora.add(Calendar.MINUTE, EXPIRATION);
+		this.expirityDate = ahora.getTime();
+		System.out.println("Borrar Mandanga, la fecha actual es: "+ this.expirityDate);
+	}
 
 	public Long getId() {
 		return id;
@@ -59,11 +67,7 @@ public class PasswordResetToken {
 		return expirityDate;
 	}
 
-	public void setExpirityDate(Date expirityDate) {
-		Calendar ahora = Calendar.getInstance();
-		ahora.add(Calendar.MINUTE, EXPIRATION);
-		this.expirityDate = ahora.getTime();
-	}
+	
 
 	public static int getExpiration() {
 		return EXPIRATION;

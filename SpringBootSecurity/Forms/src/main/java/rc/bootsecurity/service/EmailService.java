@@ -25,8 +25,9 @@ public class EmailService {
 	private SpringTemplateEngine templateEngine;
 	
 	public void sendEmail(MailDto mailDto) {
-		MimeMessage mimeMessage = emailSender.createMimeMessage();
 		try {
+
+			MimeMessage mimeMessage = emailSender.createMimeMessage();
 			MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, 
 					MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
 					StandardCharsets.UTF_8.name());
@@ -39,8 +40,12 @@ public class EmailService {
             helper.setText(html, true);
             helper.setSubject(mailDto.getSubject());
             helper.setFrom(mailDto.getFrom());
+            
+            emailSender.send(mimeMessage);
 		} catch (MessagingException e) {
+			e.printStackTrace();
 			throw new RuntimeException(e);
+			
 		}
 	}
 }

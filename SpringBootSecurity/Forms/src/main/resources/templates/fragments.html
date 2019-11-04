@@ -14,7 +14,7 @@
 <!-- Fragment #2 : Navbar contains nav links -->
 <div th:fragment="nav">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Boot Security</a>
+        <a class="navbar-brand" href="#">QContents</a>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
@@ -31,7 +31,8 @@
                     <a class="nav-link" href="#" th:href="@{~/management/index}">Management</a>
                 </li>
             </ul>
-            <form class="form-inline my-2 my-lg-0" form-method="post" th:action="@{/logout}">
+            <a style="float: right;" sec:authorize="isAnonymous()" th:href="@{~/register}" class="btn btn-outline-info my-2 my-sm-0 btn-sm">Registro</a>
+            <form class="form-inline my-2 my-lg-0"  th:action="@{/logout}">
                 <button sec:authorize="isAuthenticated()" class="btn btn-outline-danger my-2 my-sm-0 btn-sm" type="submit">Logout</button>
                 <button sec:authorize="isAnonymous()" th:href="@{~/login}" class="btn btn-outline-info my-2 my-sm-0 btn-sm" type="submit">Login</button>
             </form>

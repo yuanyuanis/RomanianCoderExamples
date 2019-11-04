@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js?autoload=true&amp;lang=css&amp;skin=Sons-Of-Obsidian"></script>
+  <title>Curso boostrap</title>
+
+</head>
+
+<body>
+  <div class="container">
+    <div class="py-5 text-center">
+      <h2>Test practice</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-8 order-md-1">
+        <h4 class="mb-3">Question</h4>
+        <form class="needs-validation" novalidate>
+          <H6>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+            Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h6>
+          <hr class="mb-4">
+
+          <h4>Opcion prety hightlisghts</h4>
+          <pre class="prettyprint linenums">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+static class Program {
+public static void Main() {
+    var fibonacci = Enumerable.Repeat(new List<long>(32){ 1, 1 }, 1)
+    .First(fib => Enumerable.Range(0, 32).Aggregate(true, (u1, u2) => {
+          fib.Add(fib.Last() + fib[fib.Count - 2]); return true;
+        }));
+        Console.WriteLine(String.Join(", ", fibonacii.Select(i => i.ToString()).ToArray()));
+      }
+}</pre>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="same-address">
+            <label class="custom-control-label" for="same-address">Respuesta 1, y esas cosas</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="save-info">
+            <label class="custom-control-label" for="save-info">Respuesta 2, y esas cosas</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="same-address">
+            <label class="custom-control-label" for="same-address">Respuesta 3, y esas cosas</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="save-info">
+            <label class="custom-control-label" for="save-info">Respuesta 4, y esas cosas</label>
+          </div>
+          <hr class="mb-4">
+          <button class="btn btn-primary btn-lg btn-block" type="submit">Enviar resultado</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
